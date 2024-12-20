@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, Input } from "@angular/core";
 import { ArticlesService } from "../services/articles.service";
 import { ArticleListConfig } from "../models/article-list-config.model";
-import { Article } from "../models/article.model";
+import { Article, mockArticles } from "../models/article.model";
 import { ArticlePreviewComponent } from "./article-preview.component";
 import { NgClass, NgForOf, NgIf } from "@angular/common";
 import { LoadingState } from "../../../core/models/loading-state.model";
@@ -80,17 +80,16 @@ export class ArticleListComponent {
       this.query.filters.limit = this.limit;
       this.query.filters.offset = this.limit * (this.currentPage - 1);
     }
-
     this.articlesService
-      .query(this.query)
+      .getMockData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.loading = LoadingState.LOADED;
-        this.results = data.articles;
+        this.results = data;
 
         // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
         this.totalPages = Array.from(
-          new Array(Math.ceil(data.articlesCount / this.limit)),
+          new Array(Math.ceil(data.length / this.limit)),
           (val, index) => index + 1,
         );
       });
