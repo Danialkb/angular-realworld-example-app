@@ -1,3 +1,7 @@
+21B031193
+
+
+
 Angular Final Exam, Fall 2024
 
 3 tasks, each task 33% of 20 points. ~6.6
